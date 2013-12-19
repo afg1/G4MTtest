@@ -30,8 +30,8 @@ Histogram2D::~Histogram2D()
 void Histogram2D::Fill(double xval, double yval, double weight)
 {
     int bx(0), by(0);
-    bx = int((xval)/spacingX) + centreBinX;
-    by = int((yval)/spacingY) + centreBinY;
+    bx = centreBinX - int((xval)/spacingX);
+    by = centreBinY - int((yval)/spacingY);
  
 //    G4cerr << bx << "\t" << by << G4endl;
 //    G4cerr << centreBinX << "\t" << centreBinY << G4endl;
@@ -55,7 +55,7 @@ void Histogram2D::Write(std::string filename)
     {
         for(size_t i=0; i < nbinsX; ++i)
         {
-            for(size_t j=0; j < nbinsY; ++j)
+            for(size_t j=(nbinsY-1); j != -1; --j)
             {
                 output << HistData->at(j).at(i) << " ";
             }
@@ -66,5 +66,14 @@ void Histogram2D::Write(std::string filename)
     {
         G4cerr << "File not found!" << G4endl;
     }
-    
+    std::ofstream header;
+    header.open("histheader.txt");
+    if(header.is_open())
+    {
+        header << nbinsX << std::endl;
+        header << nbinsY << std::endl;
+        header << minX << "\t" << maxX << std::endl;
+        header << minY << "\t" << maxY << std::endl;
+    }
+        
 }
