@@ -1,0 +1,13 @@
+# Standard Macro to set up a run, call this first before doing any other stuff
+
+# Set verbosity, we default to 0 (none) for speed
+# to get debug info set to 2.
+
+/control/verbose 0
+/tracking/verbose 0
+/run/verbose 0
+/vis/verbose 0
+
+
+
+
